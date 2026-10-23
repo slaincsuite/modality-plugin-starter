@@ -77,6 +77,7 @@ modality-plugin-starter/
 | --- | --- |
 | `make verify` | Go tests, vet, sync checks |
 | `make package` | build UI + binary + plugin directory |
+| `make package PLATFORM=macos/linux/windows` | package for a target platform |
 | `make sync-check` | verify local agent knowledge and sync checklist |
 | `make tidy` | tidy Go dependencies |
 

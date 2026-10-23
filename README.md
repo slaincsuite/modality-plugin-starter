@@ -57,3 +57,23 @@ make package
 ```
 
 输出目录：`build/plugin/modality-plugin-starter/`。
+
+## 平台说明
+
+`make package` 默认按当前操作系统构建：
+
+| 系统 | 二进制 |
+| --- | --- |
+| macOS / Linux | `modality-plugin-starter` |
+| Windows | `modality-plugin-starter.exe` |
+
+也可以按宿主平台指定目标：
+
+```bash
+make package PLATFORM=macos
+make package PLATFORM=linux
+make package PLATFORM=windows
+```
+
+`PLATFORM` 仅决定本机交叉编译时的输出约定；构建产物仍需复制到对应平台的
+modality 宿主插件目录。
