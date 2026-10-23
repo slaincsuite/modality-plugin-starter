@@ -62,11 +62,6 @@ make package
 
 `make package` 默认按当前操作系统构建：
 
-| 系统 | 二进制 |
-| --- | --- |
-| macOS / Linux | `modality-plugin-starter` |
-| Windows | `modality-plugin-starter.exe` |
-
-同一套 `make test` / `make package` 命令可在 Windows、macOS 和 Linux 上执行；
-Go 只为当前操作系统构建插件二进制。Windows 会输出 `modality-plugin-starter.exe`，
-macOS 和 Linux 输出 `modality-plugin-starter`。
+同一套 `make test` / `make package` 命令可在 Windows、macOS 和 Linux 上执行。
+Go 只为当前操作系统构建插件二进制，且所有平台均输出无扩展名的
+`modality-plugin-starter`，名称与 `plugin.json` 的 `binary` 一致。

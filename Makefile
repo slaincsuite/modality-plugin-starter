@@ -11,14 +11,12 @@ ifeq ($(PLUGIN_BINARY),)
 $(error plugin/plugin.json is missing a valid binary field)
 endif
 
-# Windows nmake sets OS=Windows_NT; Unix shells use uname.
+# Keep command names portable; plugin output always uses the manifest binary name.
 ifeq ($(OS),Windows_NT)
-    BINARY_SUFFIX := .exe
     RM_RF := rmdir /s /q
     COPY := xcopy /e /i /y
     MKDIR := mkdir
 else
-    BINARY_SUFFIX :=
     RM_RF := rm -rf
     COPY := cp -R
     MKDIR := mkdir -p
@@ -37,7 +35,7 @@ build-ui:
 
 build-plugin:
 	@$(MKDIR) $(PLUGIN_DIR)
-	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_BINARY)$(BINARY_SUFFIX) ./src/apps
+	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_BINARY) ./src/apps
 
 package: build-ui build-plugin
 	@$(MKDIR) $(PLUGIN_DIR)
