@@ -1,0 +1,20 @@
+{
+  "name": "modality-plugin-starter",
+  "displayName": "modality 插件模板",
+  "version": "1.0.0",
+  "description": "modality Go 插件工程模板",
+  "author": "slaincsuite",
+  "binary": "modality-plugin-starter",
+  "min_host_version": ">=1.0.0",
+  "services": [
+    "starter.v1.Health"
+  ],
+  "grants": [
+    "module.registry.read"
+  ],
+  "ui": {
+    "entry": "ui/index.html",
+    "routes_file": "ui/routes.json",
+    "mount_path": "/plugins/modality-plugin-starter"
+  }
+}

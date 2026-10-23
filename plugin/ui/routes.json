@@ -1,0 +1,11 @@
+[
+  {
+    "path": "/example",
+    "name": "Example",
+    "menu": {
+      "title": "示例页面",
+      "group": "示例分组",
+      "order": 0
+    }
+  }
+]
