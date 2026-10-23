@@ -1,0 +1,12 @@
+bin/
+dist/
+build/
+coverage.out
+coverage.html
+.env
+.env.*
+!.env.example
+.DS_Store
+.idea/
+ui/node_modules/
+ui/dist/
