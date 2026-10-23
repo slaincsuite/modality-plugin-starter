@@ -1,7 +1,11 @@
 GO ?= go
 UI ?= npm
-PLUGIN_NAME ?= modality-plugin-starter
+PLUGIN_NAME ?= $(shell jq -r '.name // empty' plugin/plugin.json)
 PLUGIN_DIR ?= build/plugin/$(PLUGIN_NAME)
+
+ifeq ($(PLUGIN_NAME),)
+$(error plugin/plugin.json is missing a valid name field)
+endif
 
 # Detect host OS. Go output uses an .exe suffix on Windows.
 ifeq ($(OS),Windows_NT)
