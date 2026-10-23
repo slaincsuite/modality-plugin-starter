@@ -67,13 +67,6 @@ make package
 | macOS / Linux | `modality-plugin-starter` |
 | Windows | `modality-plugin-starter.exe` |
 
-也可以按宿主平台指定目标：
-
-```bash
-make package PLATFORM=macos
-make package PLATFORM=linux
-make package PLATFORM=windows
-```
-
-`PLATFORM` 仅决定本机交叉编译时的输出约定；构建产物仍需复制到对应平台的
-modality 宿主插件目录。
+同一套 `make test` / `make package` 命令可在 Windows、macOS 和 Linux 上执行；
+Go 只为当前操作系统构建插件二进制。Windows 会输出 `modality-plugin-starter.exe`，
+macOS 和 Linux 输出 `modality-plugin-starter`。

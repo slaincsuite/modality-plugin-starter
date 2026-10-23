@@ -11,20 +11,19 @@ ifeq ($(PLUGIN_BINARY),)
 $(error plugin/plugin.json is missing a valid binary field)
 endif
 
-# Detect host OS. Go output uses an .exe suffix on Windows.
+# Windows nmake sets OS=Windows_NT; Unix shells use uname.
 ifeq ($(OS),Windows_NT)
-    HOST_OS := windows
     BINARY_SUFFIX := .exe
+    RM_RF := rmdir /s /q
+    COPY := xcopy /e /i /y
+    MKDIR := mkdir
 else
-    HOST_OS := $(shell uname -s 2>/dev/null | tr '[:upper:]' '[:lower:]')
-    ifeq ($(HOST_OS),darwin)
-        HOST_OS := macos
-    endif
     BINARY_SUFFIX :=
+    RM_RF := rm -rf
+    COPY := cp -R
+    MKDIR := mkdir -p
 endif
 
-# Build for a specific platform: make package PLATFORM=linux
-PLATFORM ?= $(HOST_OS)
 .PHONY: test-go test-ui build-ui build-plugin package verify tidy sync-check
 
 test-go:
@@ -37,24 +36,15 @@ build-ui:
 	cd ui && $(UI) install && $(UI) run build
 
 build-plugin:
-	@mkdir -p $(PLUGIN_DIR)
-ifeq ($(PLATFORM),macos)
+	@$(MKDIR) $(PLUGIN_DIR)
 	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_BINARY)$(BINARY_SUFFIX) ./src/apps
-else ifeq ($(PLATFORM),windows)
-	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_BINARY).exe ./src/apps
-else ifeq ($(PLATFORM),linux)
-	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_BINARY) ./src/apps
-else
-	@echo "unsupported platform: $(PLATFORM) (use macos, linux, or windows)"
-	@exit 2
-endif
 
 package: build-ui build-plugin
-	mkdir -p $(PLUGIN_DIR)
-	rm -rf $(PLUGIN_DIR)/ui
-	mkdir -p $(PLUGIN_DIR)/ui
+	@$(MKDIR) $(PLUGIN_DIR)
+	@$(RM_RF) $(PLUGIN_DIR)/ui
+	@$(MKDIR) $(PLUGIN_DIR)/ui
 	cp plugin/plugin.json $(PLUGIN_DIR)/plugin.json
-	cp -R ui/dist/. $(PLUGIN_DIR)/ui/
+	$(COPY) ui/dist/. $(PLUGIN_DIR)/ui/
 
 verify: test-go test-ui
 	$(GO) vet $(shell $(GO) list ./src/...)
