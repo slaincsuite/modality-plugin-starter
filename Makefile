@@ -3,7 +3,6 @@ UI ?= npm
 PLUGIN_NAME ?= $(shell jq -r '.name // empty' plugin/plugin.json)
 PLUGIN_BINARY ?= $(shell jq -r '.binary // empty' plugin/plugin.json)
 PLUGIN_DIR ?= build/plugin/$(PLUGIN_NAME)
-BUILD_DIR ?= build/bin
 
 ifeq ($(PLUGIN_NAME),)
 $(error plugin/plugin.json is missing a valid name field)
@@ -38,22 +37,21 @@ build-ui:
 	cd ui && $(UI) install && $(UI) run build
 
 build-plugin:
-	@mkdir -p $(BUILD_DIR)
+	@mkdir -p $(PLUGIN_DIR)
 ifeq ($(PLATFORM),macos)
-	$(GO) build -trimpath -o $(BUILD_DIR)/$(PLUGIN_BINARY)$(BINARY_SUFFIX) ./src/apps
+	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_BINARY)$(BINARY_SUFFIX) ./src/apps
 else ifeq ($(PLATFORM),windows)
-	$(GO) build -trimpath -o $(BUILD_DIR)/$(PLUGIN_BINARY).exe ./src/apps
+	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_BINARY).exe ./src/apps
 else ifeq ($(PLATFORM),linux)
-	$(GO) build -trimpath -o $(BUILD_DIR)/$(PLUGIN_BINARY) ./src/apps
+	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_BINARY) ./src/apps
 else
 	@echo "unsupported platform: $(PLATFORM) (use macos, linux, or windows)"
 	@exit 2
 endif
 
 package: build-ui build-plugin
-	rm -rf $(PLUGIN_DIR)
 	mkdir -p $(PLUGIN_DIR)
-	cp $(BUILD_DIR)/$(PLUGIN_BINARY)$(BINARY_SUFFIX) $(PLUGIN_DIR)/$(PLUGIN_BINARY)
+	rm -rf $(PLUGIN_DIR)/ui
 	mkdir -p $(PLUGIN_DIR)/ui
 	cp plugin/plugin.json $(PLUGIN_DIR)/plugin.json
 	cp -R ui/dist/. $(PLUGIN_DIR)/ui/

@@ -1,5 +1,5 @@
 // starter 插件生命周期服务,进程异常退出由宿主隔离并按策略重启。
-package main
+package starter
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 )
 
 // starterService 返回插件对宿主暴露的健康检查服务。
-func starterService() service.Service {
+func Service() service.Service {
 	return service.NewService("starter.v1.Health", func(registrar grpc.ServiceRegistrar) {
 		healthpb.RegisterHealthServer(registrar, healthServer{})
 	})

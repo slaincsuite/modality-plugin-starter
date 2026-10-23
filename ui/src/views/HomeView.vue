@@ -10,11 +10,11 @@ onMounted(() => {
   <section id="modality-plugin-starter">
     <div class="wrapper">
       <span class="title"> modality 插件已启动 </span>
-      <span class="message">编辑 src/apps/starters.go 与 ui/src 开始扩展平台</span>
+      <span class="message">编辑 src/starter.go 与 ui/src 开始扩展平台</span>
       <div class="guides">
         <article class="guide">
           <h2>后端服务</h2>
-          <p>在 src/apps/starters.go 中注册 gRPC 服务，并在 plugin.json 声明服务名。</p>
+          <p>在 src/starter.go 中注册 gRPC 服务，并在 plugin.json 声明服务名。</p>
         </article>
         <article class="guide">
           <h2>宿主访问</h2>

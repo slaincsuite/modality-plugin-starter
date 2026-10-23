@@ -3,8 +3,9 @@ package main
 
 import (
 	"github.com/slaincsuite/modality-gopn-sdk-go/service"
+	"github.com/slaincsuite/modality-plugin-starter/src"
 )
 
 func main() {
-	service.MustServe([]service.Service{starterService()})
+	service.MustServe([]service.Service{starter.Service()})
 }
