@@ -42,10 +42,10 @@ modality-plugin-starter/
 ├── Makefile
 ├── README.md
 ├── go.mod / go.sum
+├── plugin.json                    # plugin manifest
 ├── src/starter.go                # implementation and tests
 ├── src/apps/main.go               # process entry
-├── plugin/                       # plugin.json and route declarations
-├── ui/                           # optional Vue plugin UI
+├── ui/                           # optional Vue plugin UI (routes at ui/src/routes.json)
 └── .agents/                      # repository-local agent knowledge
 ```
 

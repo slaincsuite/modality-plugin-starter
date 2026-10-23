@@ -14,7 +14,7 @@
   ],
   "ui": {
     "entry": "ui/index.html",
-    "routes_file": "ui/routes.json",
+    "routes_file": "ui/src/routes.json",
     "mount_path": "/plugins/modality-plugin-starter"
   }
 }
