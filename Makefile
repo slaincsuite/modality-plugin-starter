@@ -30,17 +30,18 @@ build-ui:
 
 build-plugin:
 ifeq ($(PLATFORM),macos)
-	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_NAME)$(BINARY_SUFFIX) ./src/modality-plugin-starter
+	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_NAME)$(BINARY_SUFFIX) ./src/apps
 else ifeq ($(PLATFORM),windows)
-	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_NAME).exe ./src/modality-plugin-starter
+	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_NAME).exe ./src/apps
 else ifeq ($(PLATFORM),linux)
-	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_NAME) ./src/modality-plugin-starter
+	$(GO) build -trimpath -o $(PLUGIN_DIR)/$(PLUGIN_NAME) ./src/apps
 else
 	@echo "unsupported platform: $(PLATFORM) (use macos, linux, or windows)"
 	@exit 2
 endif
 
 package: build-ui build-plugin
+	rm -rf $(PLUGIN_DIR)
 	mkdir -p $(PLUGIN_DIR)/ui
 	cp plugin/plugin.json $(PLUGIN_DIR)/plugin.json
 	cp -R ui/dist/. $(PLUGIN_DIR)/ui/

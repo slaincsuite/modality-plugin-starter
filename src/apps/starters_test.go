@@ -1,5 +1,5 @@
 // starter 生命周期服务单测。
-package starter
+package main
 
 import (
 	"testing"
@@ -10,9 +10,9 @@ import (
 func TestServiceHealth(t *testing.T) {
 	server := grpc.NewServer()
 	t.Cleanup(server.Stop)
-	if item := Service(); item.Name != "starter.v1.Health" {
+	if item := starterService(); item.Name != "starter.v1.Health" {
 		t.Fatalf("service name = %q", item.Name)
 	}
-	Service().Register(server)
+	starterService().Register(server)
 
 }

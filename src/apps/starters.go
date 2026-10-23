@@ -1,5 +1,5 @@
 // starter 插件生命周期服务,进程异常退出由宿主隔离并按策略重启。
-package starter
+package main
 
 import (
 	"context"
@@ -10,8 +10,8 @@ import (
 	"github.com/slaincsuite/modality-gopn-sdk-go/service"
 )
 
-// Service 返回插件对宿主暴露的健康检查服务。
-func Service() service.Service {
+// starterService 返回插件对宿主暴露的健康检查服务。
+func starterService() service.Service {
 	return service.NewService("starter.v1.Health", func(registrar grpc.ServiceRegistrar) {
 		healthpb.RegisterHealthServer(registrar, healthServer{})
 	})

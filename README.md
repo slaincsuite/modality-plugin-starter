@@ -45,8 +45,8 @@ make verify
 
 ## 目录结构
 
-- `src/modality-plugin-starter/main.go`：插件入口
-- `src/modality-plugin-starter/`：插件业务实现与测试
+- `src/apps/main.go`：插件入口
+- `src/apps/starters.go`：插件业务实现与测试
 - `plugin/`：插件清单与静态资源
 - `ui/`：插件前端工程
 

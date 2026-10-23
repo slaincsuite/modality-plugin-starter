@@ -1,6 +1,6 @@
 # Development Workflow
 
-1. Inventory `AGENTS.md`, this directory, `src/modality-plugin-starter/`, and `ui/`
+1. Inventory `AGENTS.md`, this directory, `src/apps/`, and `ui/`
    before creating an artifact.
 2. Extend the existing service, test, route, or package target instead of
    adding a parallel structure.
