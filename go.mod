@@ -3,7 +3,7 @@ module github.com/slaincsuite/modality-plugin-starter
 go 1.27.3
 
 require (
-	github.com/slaincsuite/modality-gopn-sdk-go v0.1.0
+	github.com/slaincsuite/modality-gopn-sdk-go v0.1.1
 	google.golang.org/grpc v1.82.0
 )
 
