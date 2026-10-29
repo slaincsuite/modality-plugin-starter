@@ -11,14 +11,16 @@ import (
 	"github.com/slaincsuite/modality-gopn-sdk-go/host"
 )
 
-func TestServiceHealth(t *testing.T) {
+// TestServiceDeclaration 服务声明:健康检查由 go-plugin 内建提供,
+// 插件侧注册须为 no-op(重复注册同名服务会 FATAL)。
+func TestServiceDeclaration(t *testing.T) {
 	server := grpc.NewServer()
 	t.Cleanup(server.Stop)
-	if item := Service(); item.Name != "starter.v1.Health" {
+	item := Service()
+	if item.Name != "grpc.health.v1.Health" {
 		t.Fatalf("service name = %q", item.Name)
 	}
-	Service().Register(server)
-
+	item.Register(server)
 }
 
 type denyCaller struct{}

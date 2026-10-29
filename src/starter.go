@@ -6,7 +6,6 @@ import (
 	"fmt"
 
 	"google.golang.org/grpc"
-	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 
 	"github.com/slaincsuite/modality-gopn-sdk-go/host"
 	"github.com/slaincsuite/modality-gopn-sdk-go/service"
@@ -35,18 +34,10 @@ func QueryModuleRegistry(ctx context.Context, client *host.Client) (any, error) 
 	return resp.Data, nil
 }
 
-// starterService 返回插件对宿主暴露的健康检查服务。
+// Service 返回插件对宿主暴露的服务声明:健康检查由 go-plugin 的 gRPC server
+// **内建**提供(宿主经 gRPC health 客户端调用),插件不得再次注册同名服务——
+// 重复注册会触发 gRPC 的 FATAL 并导致插件进程退出。业务服务请照此模式
+// 注册自己的 proto 服务(register 内调用 protoc-gen-go-grpc 生成的 RegisterXxxServer)。
 func Service() service.Service {
-	return service.NewService("starter.v1.Health", func(registrar grpc.ServiceRegistrar) {
-		healthpb.RegisterHealthServer(registrar, healthServer{})
-	})
-}
-
-type healthServer struct {
-	healthpb.UnimplementedHealthServer
-}
-
-// Check 宿主健康检查探针。
-func (healthServer) Check(context.Context, *healthpb.HealthCheckRequest) (*healthpb.HealthCheckResponse, error) {
-	return &healthpb.HealthCheckResponse{Status: healthpb.HealthCheckResponse_SERVING}, nil
+	return service.NewService("grpc.health.v1.Health", func(grpc.ServiceRegistrar) {})
 }
