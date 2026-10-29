@@ -17,16 +17,18 @@ $(error plugin.json is missing a valid version field)
 endif
 
 # Keep command names portable; plugin output always uses the manifest binary name.
+# 插件包是 gzip 压缩的 tar(.mgpn);`tar -a` 按后缀推断压缩,对 .mgpn 会打成裸 tar,
+# 宿主拒绝,故显式 -z(bsdtar 与 GNU tar 均支持)。
 ifeq ($(OS),Windows_NT)
     RM_RF := rmdir /s /q
     COPY := xcopy /e /i /y
     MKDIR := mkdir
-    TAR := tar -caf
+    TAR := tar -czf
 else
     RM_RF := rm -rf
     COPY := cp -R
     MKDIR := mkdir -p
-    TAR := tar -caf
+    TAR := tar -czf
 endif
 
 .PHONY: test-go test-ui build-ui build-plugin package verify tidy sync-check
