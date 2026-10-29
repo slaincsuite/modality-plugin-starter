@@ -7,7 +7,7 @@
   "binary": "modality-plugin-starter",
   "min_host_version": ">=1.0.0",
   "services": [
-    "starter.v1.Health"
+    "grpc.health.v1.Health"
   ],
   "grants": [
     "module.registry.read"
@@ -16,5 +16,49 @@
     "entry": "ui/index.html",
     "routes_file": "ui/src/routes.json",
     "mount_path": "/plugins/modality-plugin-starter"
-  }
+  },
+  "apps": [
+    {
+      "code": "plugin-starter",
+      "name": "示例插件",
+      "description": "示例应用:示例数据源的查询、查看、新建与归档(模板占位,按业务替换)",
+      "operations": [
+        {
+          "name": "example-list",
+          "title": "查询示例列表",
+          "kind": "list",
+          "description": "分页查询示例数据",
+          "resource": "example"
+        },
+        {
+          "name": "example-query",
+          "title": "查看示例",
+          "kind": "read",
+          "description": "查看示例数据详情",
+          "resource": "example"
+        },
+        {
+          "name": "example-create",
+          "title": "新建示例",
+          "kind": "write",
+          "description": "创建示例数据",
+          "resource": "example"
+        },
+        {
+          "name": "example-archive",
+          "title": "归档示例",
+          "kind": "other",
+          "description": "归档示例数据",
+          "resource": "example"
+        }
+      ],
+      "resources": [
+        {
+          "code": "example",
+          "name": "示例数据源",
+          "description": "示例数据源:示例记录"
+        }
+      ]
+    }
+  ]
 }
